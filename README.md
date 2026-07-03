@@ -79,8 +79,8 @@ flowchart LR
         UI[React UI\nRecharts]:::ui
     end
 
-    E1 -.->|JSON/CSV| S3
-    E2 -.->|JSON/CSV| S3
+    E1 -.->|Parquet| S3
+    E2 -.->|Parquet| S3
     
     S3 -->|External Stage| STG
     STG -->|Cleans & Aggregates| DBT
@@ -97,7 +97,7 @@ flowchart LR
     classDef ui fill:#3182ce,stroke:#2b6cb0,color:#fff
 ```
 
-1. **Ingestion (AWS S3)**: Raw telemetry logs (JSON/CSV) from mining equipment are uploaded to secure S3 buckets.
+1. **Ingestion (AWS S3)**: Raw telemetry logs (Parquet) from mining equipment are uploaded to secure S3 buckets.
 2. **Storage (Snowflake)**: External stages are configured in Snowflake to ingest the raw S3 data into staging tables.
 3. **Transformation (dbt)**: `dbt` (Data Build Tool) is used to clean, join, and aggregate the raw data into business-ready Fact (`FCT_DAILY_PRODUCTION`) and Dimension (`DIM_EQUIPMENT`) tables.
 4. **API Layer (Next.js)**: Next.js API routes query the transformed Snowflake views securely using the Snowflake Node.js SDK.
