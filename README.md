@@ -57,13 +57,45 @@ By aggregating data from extraction sites and hauling fleets into a centralized 
 
 ## 🏗️ System Architecture
 
-<!-- 
-  REPLACE THIS WITH AN ARCHITECTURE DIAGRAM 
-  You can draw one on draw.io or excalidraw and export it to docs/images/
--->
-<div align="center">
-  <img src="docs/images/architecture-diagram.png" alt="System Architecture Diagram" width="800" />
-</div>
+```mermaid
+flowchart LR
+    subgraph Data Sources
+        E1[Haul Trucks]:::source
+        E2[Excavators]:::source
+    end
+
+    subgraph AWS Cloud
+        S3[(AWS S3\nRaw Logs)]:::storage
+    end
+
+    subgraph Snowflake Data Cloud
+        STG[(Staging\nTables)]:::snowflake
+        FCT[(Fact & Dim\nTables)]:::snowflake
+        DBT{{dbt\nTransformations}}:::dbt
+    end
+
+    subgraph Next.js Dashboard
+        API[API Routes\nSnowflake SDK]:::api
+        UI[React UI\nRecharts]:::ui
+    end
+
+    E1 -.->|JSON/CSV| S3
+    E2 -.->|JSON/CSV| S3
+    
+    S3 -->|External Stage| STG
+    STG -->|Cleans & Aggregates| DBT
+    DBT -->|Materializes| FCT
+    
+    FCT -->|SQL Queries| API
+    API -->|JSON Data| UI
+
+    classDef source fill:#2d3748,stroke:#4a5568,color:#fff
+    classDef storage fill:#ff9900,stroke:#e28743,color:#fff
+    classDef snowflake fill:#29b5e8,stroke:#1a90c0,color:#fff
+    classDef dbt fill:#ff694b,stroke:#e05238,color:#fff
+    classDef api fill:#000000,stroke:#333333,color:#fff
+    classDef ui fill:#3182ce,stroke:#2b6cb0,color:#fff
+```
 
 1. **Ingestion (AWS S3)**: Raw telemetry logs (JSON/CSV) from mining equipment are uploaded to secure S3 buckets.
 2. **Storage (Snowflake)**: External stages are configured in Snowflake to ingest the raw S3 data into staging tables.
