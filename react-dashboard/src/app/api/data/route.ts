@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
 import { getSnowflakeConnection, executeQuery } from "@/lib/snowflake";
+import mockData from "@/data/mockData.json";
 
 export async function GET() {
   const startTime = Date.now();
+
+  // 1. Explicit Mock Mode Check
+  if (process.env.USE_MOCK_DATA === "true") {
+    return NextResponse.json(mockData, {
+      headers: { "Cache-Control": "private, max-age=30" },
+    });
+  }
 
   try {
     const conn = await getSnowflakeConnection();
@@ -23,6 +31,7 @@ export async function GET() {
           productionCount: production.length,
           haulageCount: haulage.length,
           queryTimeMs,
+          isMock: false
         },
       },
       {
@@ -34,17 +43,12 @@ export async function GET() {
   } catch (error: unknown) {
     const message =
       error instanceof Error ? error.message : "Unknown error occurred";
-    console.error("[API /data] Error:", message);
+    
+    console.warn("[API /data] Snowflake connection failed, falling back to mock data:", message);
 
-    return NextResponse.json(
-      {
-        error: message,
-        meta: {
-          fetchedAt: new Date().toISOString(),
-          queryTimeMs: Date.now() - startTime,
-        },
-      },
-      { status: 500 }
-    );
+    // 2. Automatic Fallback on Failure (e.g. trial expired)
+    return NextResponse.json(mockData, {
+      headers: { "Cache-Control": "private, max-age=30" },
+    });
   }
 }

@@ -11,31 +11,50 @@ const connection = snowflake.createConnection({
   schema: process.env.SNOWFLAKE_SCHEMA
 });
 
+const fs = require('fs');
+const path = require('path');
+
 connection.connect((err, conn) => {
   if (err) {
     console.error('Unable to connect: ' + err.message);
     process.exit(1);
   }
   
-  console.log('Connected!');
+  console.log('Connected! Fetching data for mock snapshot...');
 
   conn.execute({
-    sqlText: 'SELECT * FROM FCT_DAILY_PRODUCTION LIMIT 1',
-    complete: (err1, stmt1, rows1) => {
+    sqlText: 'SELECT * FROM FCT_DAILY_PRODUCTION',
+    complete: (err1, stmt1, production) => {
       if (err1) {
         console.error('Query 1 error:', err1);
         process.exit(1);
       }
-      console.log('Rows 1:', rows1);
 
       conn.execute({
-        sqlText: 'SELECT * FROM FCT_HAULAGE_ANALYTICS LIMIT 1',
-        complete: (err2, stmt2, rows2) => {
+        sqlText: 'SELECT * FROM FCT_HAULAGE_ANALYTICS',
+        complete: (err2, stmt2, haulage) => {
           if (err2) {
             console.error('Query 2 error:', err2);
             process.exit(1);
           }
-          console.log('Rows 2:', rows2);
+          
+          const mockData = {
+            production,
+            haulage,
+            meta: {
+              fetchedAt: new Date().toISOString(),
+              productionCount: production.length,
+              haulageCount: haulage.length,
+              isMock: true,
+            }
+          };
+
+          const outDir = path.join(__dirname, 'src', 'data');
+          fs.mkdirSync(outDir, { recursive: true });
+          fs.writeFileSync(path.join(outDir, 'mockData.json'), JSON.stringify(mockData, null, 2));
+
+          console.log(`Saved ${production.length} production rows and ${haulage.length} haulage rows to src/data/mockData.json`);
+          
           conn.destroy((err, conn) => {
             console.log('Disconnected');
             process.exit(0);

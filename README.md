@@ -132,6 +132,11 @@ To run this project locally, you will need to set up both the data warehouse and
    ```
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### 4. Static Mock Fallback (No Snowflake Required)
+If your Snowflake free trial has expired or you do not want to set up the database, you can still run the dashboard using a static JSON snapshot of the real data.
+1. Set `USE_MOCK_DATA=true` in your `.env.local` file.
+2. The Next.js API will automatically bypass Snowflake and serve the dashboard using the cached snapshot in `src/data/mockData.json`.
+
 ---
 
 ## 🛠️ Built With
