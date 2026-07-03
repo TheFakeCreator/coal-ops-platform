@@ -1,9 +1,5 @@
 <div align="center">
-  <!-- 
-    REPLACE THIS IMAGE WITH YOUR BANNER OR HERO SCREENSHOT 
-    Recommended size: 1200x600px
-  -->
-  <img src="docs/images/banner-placeholder.png" alt="Coal Ops Platform Banner" width="100%" />
+<img src="docs/images/banner-placeholder.png" alt="Coal Ops Platform Banner" width="100%" />
 
   # ⛏️ Coal Operations Command Center
   
@@ -38,10 +34,7 @@ By aggregating data from extraction sites and hauling fleets into a centralized 
 
 ## 📸 Dashboard Previews
 
-> **Note:** Create a `docs/images/` folder and drop your screenshots there, then update these links!
-
 <div align="center">
-  <!-- Dashboard Overview Screenshot -->
   <img src="docs/images/dashboard-overview.png" alt="Dashboard Overview" width="800" />
   <p><i>Main Dashboard Interface: Real-time KPIs and Production Trends</i></p>
 </div>
@@ -50,7 +43,7 @@ By aggregating data from extraction sites and hauling fleets into a centralized 
 
 | Fleet Analytics | Dark Mode UI Elements |
 | :---: | :---: |
-| <!-- Add Fleet Image --><img src="docs/images/fleet-analytics.png" alt="Fleet Analytics" width="400" /> | <!-- Add UI Image --><img src="docs/images/ui-components.png" alt="UI Components" width="400" /> |
+| <img src="docs/images/fleet-analytics.png" alt="Fleet Analytics" width="400" /> | <img src="docs/images/ui-components.png" alt="UI Components" width="400" /> |
 | *Monitoring equipment status and fuel consumption across regions.* | *Custom designed React components using Tailwind CSS and Radix UI primitives.* |
 
 ---
