@@ -28,7 +28,7 @@ Modern mining relies heavily on heavy machinery and logistics. A minor inefficie
 
 By aggregating data from extraction sites and hauling fleets into a centralized Snowflake data warehouse, and transforming it via dbt, this Next.js dashboard provides Shift Managers with instantaneous visibility into **fuel efficiency, total extraction yields, and equipment status**.
 
-### ✨ The "Recruiter Hook" (Skills Demonstrated)
+### ✨ Technical Capabilities & Skills
 - **Data Engineering**: Architected an ELT pipeline moving raw S3 data into a Snowflake warehouse, writing custom `dbt` models to build fact and dimension tables.
 - **Frontend Engineering**: Built a responsive, highly-interactive SPA using Next.js, React 19, and Tailwind CSS.
 - **UI/UX Design**: Implemented a modern, glassmorphic design system using `oklch` color spaces, Framer Motion animations, and custom Recharts visualizations.
