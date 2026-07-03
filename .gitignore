@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Next.js / Web Builds
+.next/
+out/
+build/
+dist/
+
+# Environment Variables & Secrets (CRITICAL)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+secrets.toml
+.streamlit/secrets.toml
+credentials.json
+client_secret*.json
+
+# DBT
+target/
+dbt_packages/
+logs/
+
+# Snowflake / DB
+.snowsql/
+*.sqlite
+
+# IDE & OS
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db

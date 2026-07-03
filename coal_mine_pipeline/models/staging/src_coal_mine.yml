@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: raw_coal
+    database: COAL_MINE_DB
+    schema: RAW
+    tables:
+      - name: DIM_EQUIPMENT
+      - name: DIM_MINE_SITES
+      - name: FACT_COAL_PRODUCTION
+      - name: FACT_HAULAGE_TRIPS
